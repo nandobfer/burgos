@@ -10,21 +10,31 @@ def readRequirements():
     return requirements
 
 
-def reqcheq():
+def reqcheq(verbose = False):
     requirements = readRequirements()
     for requirement in requirements:
+        if verbose:
+            print(f'Verificando requerimento: {requirement}')
         names = requirement.split()
         if len(names) > 1:
             install_name, import_name = names[1], names[0]
             try:
                 installModule(install_name, import_name)
-            except:
+                if verbose:
+                    print(f'Módulo já instalado: {requirement}')
+            except Exception as error:
                 print(f'Não foi possivel baixar o modulo: {requirement}')
+                if verbose:
+                    print(f'Erro: {error}')
         else:
             try:
                 installModule(requirement, requirement)
-            except:
+                if verbose:
+                    print(f'Módulo já instalado: {requirement}')
+            except Exception as error:
                 print(f'Não foi possivel baixar o modulo: {requirement}')
+                if verbose:
+                    print(f'Erro: {error}')
 
 
 def installModule(install_name, import_name):
@@ -48,5 +58,5 @@ def installModule(install_name, import_name):
         except:
             return False
 
-
-reqcheq()
+if __name__ == '__main__':
+    reqcheq()
