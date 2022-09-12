@@ -4,14 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "burgos"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name="Fernando Burgos", email="nandobfer@gmail.com" },
 ]
 description = "A bundle of useful packages for managing login sessions and database"
 readme = "README.md"
 license = { file="LICENSE" }
-requires-python = ">=3.7"
+requires-python = ">=3.6"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
