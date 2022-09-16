@@ -5,8 +5,11 @@ class Mysql():
     def __init__(self, login_table):
         self.login_table = login_table
     
-    def run(self, sql):
-        cursor = self.connection.cursor(buffered=True)
+    def run(self, sql, dict_cursor=False):
+        if dict_cursor:
+            cursor = self.connection.cursor(buffered=True, dictionary=True)
+        else:
+            cursor = self.connection.cursor(buffered=True)
         cursor.execute(sql)
         data = None
         
