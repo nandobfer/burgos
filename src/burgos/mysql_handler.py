@@ -7,8 +7,8 @@ class Mysql():
         self.auth = auth
     
     def run(self, sql, dict_cursor=False):
-    
-        cursor = self.connection.cursor(buffered=True)
+        self.connect()
+        cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
         cursor.execute(sql)
         data = None
         
@@ -18,6 +18,7 @@ class Mysql():
         self.connection.commit()  
 
         cursor.close()
+        self.disconnect()
         return data
 
     def connect(self):
@@ -34,8 +35,7 @@ class Mysql():
                 cursor.execute("select database();")
                 record = cursor.fetchone()
                 print("You're connected to database: ", record)
-                # cursor.close()
-                self.auth = auth
+                cursor.close()
 
                 return self.connection
 
@@ -52,7 +52,7 @@ class Mysql():
         ''' Fetch a number of rows from a table that exists in database.
         Number of rows and table defined in config file.
         if number of rows equals to 0, will try to fetch all rows.'''
-
+        self.connect()
         if where:
             sql = f'SELECT * FROM `{table}` WHERE {where[0]} = "{where[1]}"'
             if reversed:
@@ -79,12 +79,15 @@ class Mysql():
             data.append(row)
 
         cursor.close()
+        self.disconnect()
         return data
 
     def updateTable(self, table, id, column, value, id_column):
+        self.connect()
         command = f'Update {table} set {column} = "{value}" where {id_column} = {id}'
         cursor = self.connection.cursor()
         cursor.execute(command)
         self.connection.commit()
         cursor.close()
         print("Record Updated successfully ")
+        self.disconnect()
