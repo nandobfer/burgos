@@ -16,11 +16,7 @@ class Session():
     def __init__(self, database_auth:dict, login_table):
         self.connections = []
         self.database_auth = database_auth
-        self.database = Mysql(login_table)
-        self.database.connect(database_auth)
-
-    def reconnectDatabase(self):
-        self.database.connect(self.database_auth)
+        self.database = Mysql(database_auth, login_table)
 
     def getConnection(self, ip):
         for connection in self.connections:
@@ -31,6 +27,7 @@ class Session():
                     self.connections.remove(connection)
 
     def login(self, user, password, ip):
+        self.database.connect()
         cpf = None
         email = None
         try:
@@ -61,7 +58,9 @@ class Session():
 
                     self.connections.append(
                         Connection(ip, self.database, id))
+                    self.database.connect()
                     return str(id)
         except Exception as error:
             print(error)
+            self.database.connect()
             return None

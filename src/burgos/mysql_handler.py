@@ -2,14 +2,13 @@ import mysql.connector
 
 
 class Mysql():
-    def __init__(self, login_table):
+    def __init__(self, auth:dict, login_table:str):
         self.login_table = login_table
+        self.auth = auth
     
     def run(self, sql, dict_cursor=False):
-        if dict_cursor:
-            cursor = self.connection.cursor(buffered=True, dictionary=True)
-        else:
-            cursor = self.connection.cursor(buffered=True)
+    
+        cursor = self.connection.cursor(buffered=True)
         cursor.execute(sql)
         data = None
         
@@ -21,13 +20,13 @@ class Mysql():
         cursor.close()
         return data
 
-    def connect(self, auth:dict):
+    def connect(self):
         ''' Try to connect to a database with auth params defined in config file '''
         try:
-            self.connection = mysql.connector.connect(host=auth['host'],
-                                                      database=auth['database'],
-                                                      user=auth['user'],
-                                                      password=auth['password'])
+            self.connection = mysql.connector.connect(host=self.auth['host'],
+                                                      database=self.auth['database'],
+                                                      user=self.auth['user'],
+                                                      password=self.auth['password'])
             if self.connection.is_connected():
                 db_Info = self.connection.get_server_info()
                 print("Connected to MySQL Server version ", db_Info)
