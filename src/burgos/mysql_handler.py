@@ -7,7 +7,9 @@ class Mysql():
         self.auth = auth
     
     def run(self, sql, dict_cursor=False, disconnect = True):
-        self.connect()
+        if not self.connection.is_connected():
+            self.connect()
+            
         cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
         cursor.execute(sql)
         data = None
@@ -16,8 +18,8 @@ class Mysql():
             data = cursor.fetchall()
             
         self.connection.commit()  
-
         cursor.close()
+        
         if disconnect:
             self.disconnect()
         return data
