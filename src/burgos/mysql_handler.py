@@ -8,7 +8,7 @@ class Mysql():
     
     def run(self, sql, dict_cursor=False, disconnect = True):
         try:
-            if self.connection:
+            if self.connection.is_connected():
                 pass
         except:
             self.connect()
