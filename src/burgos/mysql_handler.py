@@ -10,6 +10,8 @@ class Mysql():
         try:
             if self.connection.is_connected():
                 pass
+            else:
+                self.connect()
         except:
             self.connect()
             
