@@ -6,7 +6,7 @@ class Mysql():
         self.login_table = login_table
         self.auth = auth
     
-    def run(self, sql, dict_cursor=False):
+    def run(self, sql, dict_cursor=False, disconnect = True):
         self.connect()
         cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
         cursor.execute(sql)
@@ -18,7 +18,8 @@ class Mysql():
         self.connection.commit()  
 
         cursor.close()
-        self.disconnect()
+        if disconnect:
+            self.disconnect()
         return data
 
     def connect(self):
