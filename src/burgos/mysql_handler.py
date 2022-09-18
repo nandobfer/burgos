@@ -7,7 +7,10 @@ class Mysql():
         self.auth = auth
     
     def run(self, sql, dict_cursor=False, disconnect = True):
-        if not self.connection.is_connected():
+        try:
+            if self.connection:
+                pass
+        except:
             self.connect()
             
         cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
