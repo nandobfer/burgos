@@ -6,7 +6,7 @@ class Mysql():
         self.login_table = login_table
         self.auth = auth
     
-    def run(self, sql, dict_cursor=False):            
+    def run(self, sql, dict_cursor=True):            
         cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
         cursor.execute(sql)
         data = None
