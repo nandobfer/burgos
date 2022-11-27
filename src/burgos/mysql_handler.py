@@ -6,9 +6,13 @@ class Mysql():
         self.login_table = login_table
         self.auth = auth
     
-    def run(self, sql, *args):            
-        cursor = self.connection.cursor(prepared=True, buffered=True, dictionary=True)
-        cursor.execute(sql, args)
+    def run(self, sql, dict_cursor=True, prepared=False, values=None):  
+        if prepared:
+            cursor = self.connection.cursor(prepared=True)
+            cursor.execute(sql, values)
+        else:
+            cursor = self.connection.cursor(buffered=True, dictionary=dict_cursor)
+            cursor.execute(sql)
         data = None
         
         if sql.split()[0].lower() == 'select':
