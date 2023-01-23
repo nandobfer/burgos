@@ -12,7 +12,7 @@ COLORS = {
 
 def prettyPrint(string, color = "normal", custom = False):
     if custom:
-        print(f"{custom}{string}{COLORS['normal']}")
+        print(f"{COLORS['custom']}{string}{COLORS['normal']}")
     else:
-        print(f"{color}{string}{COLORS['normal']}")
+        print(f"{COLORS['color']}{string}{COLORS['normal']}")
 
