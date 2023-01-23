@@ -14,7 +14,7 @@ def togglePrint(mode:bool):
     else:
         blockPrint()
 
-def nastyPrint(string):
+def nastyPrint(string:str):
     togglePrint(True)
     print(string)
     togglePrint(False)

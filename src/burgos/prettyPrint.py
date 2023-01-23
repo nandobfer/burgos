@@ -10,7 +10,7 @@ COLORS = {
     "white": '\033[0;37m' 
 }
 
-def prettyPrint(string, color = "normal", custom = False):
+def prettyPrint(string:str, color = "normal", custom = False):
     if custom:
         print(f"{COLORS[custom]}{string}{COLORS['normal']}")
     else:
